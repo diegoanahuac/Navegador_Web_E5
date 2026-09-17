@@ -1,0 +1,12 @@
+# Compilados de Java
+out/
+bin/
+*.class
+
+# Archivos de IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
