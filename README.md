@@ -49,17 +49,17 @@ Linux / macOS:
 ./ejecutar.sh --consola    # versión de consola con menú
 ```
 
-Windows:
+Windows (en PowerShell hay que anteponer `.\`):
 
-```bat
-ejecutar.bat
-ejecutar.bat --consola
+```powershell
+.\ejecutar.bat
+.\ejecutar.bat --consola
 ```
 
 Manualmente:
 
 ```bash
-javac -encoding UTF-8 -d out $(find src -name '*.java')
+javac -encoding UTF-8 -d out src/navegador/*.java src/navegador/*/*.java
 java -cp out navegador.Main
 ```
 
