@@ -12,6 +12,9 @@ simulan con un catálogo interno y cualquier URL desconocida produce un **error 
 
 ![Navegar](docs/capturas/01-visitar.png)
 
+> **¿Necesitas entender el código?** En [`EXPLICACION.md`](EXPLICACION.md) está el
+> desglose completo: fase por fase, clase por clase y método por método.
+
 ## Reglas de navegación implementadas
 
 | Acción | Qué ocurre |
