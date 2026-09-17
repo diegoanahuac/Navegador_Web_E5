@@ -102,9 +102,9 @@ public class PanelPila extends PanelRedondeado {
     }
 
     /** Muestra temporalmente el aviso "PILA LLENA" o "PILA VACÍA". */
-    public void mostrarAviso(String texto, boolean esError) {
+    public void mostrarAviso(String texto) {
         etiquetaAviso.setText("<html><div style='text-align:center;'>&#10006; " + texto + "</div></html>");
-        etiquetaAviso.setForeground(esError ? Paleta.GUINDA : Paleta.ALERTA);
+        etiquetaAviso.setForeground(Paleta.ACENTO);
         cartas.show(contenedor, TARJETA_AVISO);
         temporizadorAviso.restart();
     }
@@ -161,7 +161,7 @@ public class PanelPila extends PanelRedondeado {
             texto.setText(esCima ? url + "   ▲ cima" : url);
             texto.setForeground(esCima ? acento : Paleta.TEXTO);
             texto.setFont(Paleta.fuente(esCima ? Font.BOLD : Font.PLAIN, 12));
-            caja.setColorFondo(esCima ? Paleta.GUINDA_SUAVE : Paleta.TARJETA_SUAVE);
+            caja.setColorFondo(esCima ? Paleta.ACENTO_TENUE : Paleta.TARJETA_SUAVE);
             caja.setColorBorde(esCima ? acento : Paleta.BORDE);
             caja.setGrosorBorde(esCima ? 2 : 1);
         }

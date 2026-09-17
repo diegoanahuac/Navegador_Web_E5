@@ -51,22 +51,21 @@ public class BotonPlano extends JButton {
         });
     }
 
-    /** Botón principal: relleno guinda con texto claro. */
+    /** Botón principal: relleno del color de acento con texto claro. */
     public static BotonPlano solido(String texto) {
-        return new BotonPlano(texto, Paleta.GUINDA, Paleta.GUINDA_CLARO,
-                Paleta.GUINDA_OSCURO, Paleta.BLANCO_CALIDO, 12);
+        return new BotonPlano(texto, Paleta.ACENTO, Paleta.ACENTO_PROFUNDO,
+                Paleta.ACENTO, Paleta.BLANCO_CALIDO, 12);
     }
 
-    /** Botón secundario: beige con contorno guinda. */
+    /** Botón secundario: beige con contorno del color de acento. */
     public static BotonPlano contorno(String texto) {
-        return new BotonPlano(texto, Paleta.TARJETA, Paleta.GUINDA_SUAVE,
-                Paleta.GUINDA, Paleta.GUINDA, 12);
+        return new BotonPlano(texto, Paleta.TARJETA, Paleta.ACENTO_TENUE,
+                Paleta.ACENTO, Paleta.ACENTO, 12);
     }
 
-    /** Botón de salida: guinda oscuro. */
+    /** Botón de salida: mismo acento que el botón principal. */
     public static BotonPlano salida(String texto) {
-        return new BotonPlano(texto, Paleta.GUINDA_OSCURO, Paleta.GUINDA,
-                Paleta.GUINDA_OSCURO, Paleta.BLANCO_CALIDO, 12);
+        return solido(texto);
     }
 
     @Override

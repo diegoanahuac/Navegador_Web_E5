@@ -30,10 +30,10 @@ public class VentanaNavegador extends JFrame {
     private final JTextField campoUrl = new JTextField();
     private final PanelPaginaActual panelPaginaActual = new PanelPaginaActual();
     private final PanelPila panelAtras =
-            new PanelPila("Pila atrás (Back stack)", Pila.CAPACIDAD_POR_DEFECTO, Paleta.GUINDA);
+            new PanelPila("Pila atrás (Back stack)", Pila.CAPACIDAD_POR_DEFECTO, Paleta.ACENTO);
     private final PanelPila panelAdelante =
             new PanelPila("Pila adelante (Forward stack)", Pila.CAPACIDAD_POR_DEFECTO,
-                    Paleta.GUINDA_CLARO);
+                    Paleta.ACENTO);
     private final JLabel barraEstado = new JLabel();
 
     public VentanaNavegador() {
@@ -65,7 +65,7 @@ public class VentanaNavegador extends JFrame {
     // ------------------------------------------------------------------ UI
 
     private JComponent construirEncabezado() {
-        PanelRedondeado barra = new PanelRedondeado(16, Paleta.GUINDA, Paleta.GUINDA_OSCURO);
+        PanelRedondeado barra = new PanelRedondeado(16, Paleta.ACENTO, Paleta.ACENTO_PROFUNDO);
         barra.setLayout(new BorderLayout(10, 0));
         barra.setBorder(BorderFactory.createEmptyBorder(16, 22, 16, 22));
 
@@ -77,7 +77,7 @@ public class VentanaNavegador extends JFrame {
 
         JLabel subtitulo = new JLabel("Historial con dos pilas · LIFO · 100% local");
         subtitulo.setFont(Paleta.fuente(Font.PLAIN, 12));
-        subtitulo.setForeground(new java.awt.Color(0xF0D9DC));
+        subtitulo.setForeground(Paleta.ACENTO_TENUE);
         subtitulo.setHorizontalAlignment(SwingConstants.RIGHT);
 
         barra.add(titulo, BorderLayout.WEST);
@@ -129,7 +129,7 @@ public class VentanaNavegador extends JFrame {
 
         campoUrl.setFont(Paleta.fuente(Font.PLAIN, 14));
         campoUrl.setForeground(Paleta.TEXTO);
-        campoUrl.setCaretColor(Paleta.GUINDA);
+        campoUrl.setCaretColor(Paleta.ACENTO);
         campoUrl.setOpaque(false);
         campoUrl.setBorder(BorderFactory.createEmptyBorder());
         campoUrl.setText("https://www.google.com");
@@ -179,8 +179,8 @@ public class VentanaNavegador extends JFrame {
 
         for (String url : navegador.getCatalogo().urlsDisponibles()) {
             String nombre = url.replaceFirst("^https://(www\\.)?", "");
-            BotonPlano chip = new BotonPlano(nombre, Paleta.TARJETA_SUAVE, Paleta.GUINDA_SUAVE,
-                    Paleta.BORDE, Paleta.GUINDA, 10);
+            BotonPlano chip = new BotonPlano(nombre, Paleta.TARJETA_SUAVE, Paleta.ACENTO_TENUE,
+                    Paleta.BORDE, Paleta.ACENTO, 10);
             chip.setFont(Paleta.fuente(Font.PLAIN, 11));
             chip.setBorder(BorderFactory.createEmptyBorder(4, 10, 4, 10));
             chip.setToolTipText("Copiar " + url + " a la barra de direcciones");
@@ -254,16 +254,16 @@ public class VentanaNavegador extends JFrame {
 
         switch (resultado.getAviso()) {
             case PILA_ATRAS_LLENA:
-                panelAtras.mostrarAviso("PILA LLENA", false);
+                panelAtras.mostrarAviso("PILA LLENA");
                 break;
             case PILA_ADELANTE_LLENA:
-                panelAdelante.mostrarAviso("PILA LLENA", false);
+                panelAdelante.mostrarAviso("PILA LLENA");
                 break;
             case PILA_ATRAS_VACIA:
-                panelAtras.mostrarAviso("PILA VACÍA", true);
+                panelAtras.mostrarAviso("PILA VACÍA");
                 break;
             case PILA_ADELANTE_VACIA:
-                panelAdelante.mostrarAviso("PILA VACÍA", true);
+                panelAdelante.mostrarAviso("PILA VACÍA");
                 break;
             default:
                 break;
@@ -284,15 +284,15 @@ public class VentanaNavegador extends JFrame {
         switch (resultado.getTipo()) {
             case ERROR:
                 simbolo = "⚠  ";
-                barraEstado.setForeground(Paleta.GUINDA);
+                barraEstado.setForeground(Paleta.ACENTO);
                 break;
             case AVISO:
                 simbolo = "⚑  ";
-                barraEstado.setForeground(Paleta.ALERTA);
+                barraEstado.setForeground(Paleta.ACENTO);
                 break;
             default:
                 simbolo = "✓  ";
-                barraEstado.setForeground(Paleta.OK);
+                barraEstado.setForeground(Paleta.ACENTO);
                 break;
         }
         barraEstado.setText(simbolo + resultado.getMensaje());

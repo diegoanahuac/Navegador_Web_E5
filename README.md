@@ -77,6 +77,15 @@ Sitios disponibles en el catálogo local: `google.com`, `mozilla.org`, `openai.c
 `stackoverflow.com`, `github.com`, `merida.anahuac.mx`, `wikipedia.org`, `youtube.com`,
 `java.com`.
 
+## Tema visual
+
+La interfaz usa una base **beige** y un **único color de acento violeta neón**
+(`#6D28F5`), definido en `ui/Paleta.java`. Toda la aplicación —encabezado, botones,
+bordes, números de las casillas, avisos y mensajes de estado— usa ese mismo tono;
+`ACENTO_PROFUNDO` y `ACENTO_TENUE` son el mismo color más oscuro (solo para el
+*hover* de los botones) y más claro (relleno de la cima). Para cambiar todo el
+tema basta con modificar esas tres constantes.
+
 ## Estructura del proyecto
 
 ```
@@ -92,7 +101,7 @@ src/navegador/
 │   ├── VentanaNavegador.java      Ventana principal
 │   ├── PanelPaginaActual.java     Tarjeta de la página actual / 404
 │   ├── PanelPila.java             Dibujo de una pila y sus avisos
-│   ├── Paleta.java                Colores beige + vino/guinda y tipografías
+│   ├── Paleta.java                Color: base beige + un único acento violeta
 │   ├── PanelRedondeado.java       Panel con esquinas redondeadas
 │   ├── BotonPlano.java            Botón plano redondeado
 │   └── IconoGlobo.java            Icono de globo dibujado en código

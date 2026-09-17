@@ -22,10 +22,10 @@ public class PanelPaginaActual extends PanelRedondeado {
         setLayout(new BorderLayout(18, 0));
         setBorder(BorderFactory.createEmptyBorder(22, 24, 22, 24));
 
-        icono.setIcon(new IconoGlobo(54, Paleta.GUINDA));
+        icono.setIcon(new IconoGlobo(54, Paleta.ACENTO));
 
         titulo.setFont(Paleta.fuente(Font.BOLD, 21));
-        titulo.setForeground(Paleta.GUINDA);
+        titulo.setForeground(Paleta.ACENTO);
         descripcion.setFont(Paleta.fuente(Font.PLAIN, 13));
         descripcion.setForeground(Paleta.TEXTO_SUAVE);
 
@@ -54,12 +54,12 @@ public class PanelPaginaActual extends PanelRedondeado {
         }
         if (!pagina.fueEncontrada()) {
             titulo.setText("404");
-            titulo.setForeground(Paleta.GUINDA_OSCURO);
+            titulo.setForeground(Paleta.ACENTO_PROFUNDO);
             descripcion.setText(pagina.getUrl() + " — página no encontrada en el catálogo local");
             return;
         }
         titulo.setText(pagina.getUrl());
-        titulo.setForeground(Paleta.GUINDA);
+        titulo.setForeground(Paleta.ACENTO);
         descripcion.setText(pagina.getDescripcion());
     }
 }
