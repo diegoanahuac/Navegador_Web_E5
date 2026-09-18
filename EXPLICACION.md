@@ -16,6 +16,7 @@
 
 ## Índice
 
+0. [Antes de empezar: clonar y ejecutar el proyecto](#0-antes-de-empezar-clonar-y-ejecutar-el-proyecto)
 1. [Resumen en 30 segundos](#1-resumen-en-30-segundos)
 2. [Fases de construcción del proyecto](#2-fases-de-construcción-del-proyecto)
 3. [Arquitectura: cómo se conectan las clases](#3-arquitectura-cómo-se-conectan-las-clases)
@@ -31,6 +32,96 @@
 8. [Preguntas que les pueden hacer (y sus respuestas)](#8-preguntas-que-les-pueden-hacer-y-sus-respuestas)
 9. [Glosario de Java usado en el proyecto](#9-glosario-de-java-usado-en-el-proyecto)
 10. [Dónde tocar el código para cambiar cosas](#10-dónde-tocar-el-código-para-cambiar-cosas)
+
+---
+
+## 0. Antes de empezar: clonar y ejecutar el proyecto
+
+**Orden obligatorio: primero `git clone`, luego `cd`, y hasta entonces el script.**
+El `ejecutar.bat` / `ejecutar.sh` vive *dentro* del repositorio: no existe en tu
+computadora hasta que descargas el proyecto, y solo funciona si la terminal está
+parada dentro de la carpeta `Navegador_Web_E5`.
+
+### Requisito único
+
+Tener instalado un **JDK 8 o superior**. Compruébalo con:
+
+```
+javac -version
+```
+
+Si responde algo como `javac 21.0.2`, estás listo. Si dice *"no se reconoce el
+comando"*, instala el JDK (por ejemplo Temurin u Oracle JDK) y vuelve a abrir la
+terminal.
+
+### Paso 1 — Clonar el repositorio
+
+Colócate en la carpeta donde quieras guardar el proyecto y clona la rama:
+
+```
+git clone -b claude/explicacion-codigo https://github.com/diegoanahuac/Navegador_Web_E5.git
+```
+
+> `-b claude/explicacion-codigo` descarga la rama que incluye este documento.
+> El código es idéntico en la rama `claude/eager-knuth-cuzccc`; si clonas sin `-b`
+> y no ves los archivos, cambia de rama con
+> `git checkout claude/explicacion-codigo`.
+
+### Paso 2 — Entrar a la carpeta del proyecto
+
+```
+cd Navegador_Web_E5
+```
+
+Este paso **no es opcional**: si ejecutas el script desde afuera, la terminal no
+encuentra el archivo. Para confirmar que estás en el lugar correcto, lista el
+contenido (`dir` en Windows, `ls` en Linux/macOS): deben aparecer `src`,
+`ejecutar.bat`, `ejecutar.sh` y `README.md`.
+
+### Paso 3 — Ejecutar
+
+**Windows (PowerShell):** hay que escribir `.\` antes del nombre; PowerShell no
+ejecuta archivos de la carpeta actual sin ese prefijo.
+
+```
+.\ejecutar.bat              # interfaz gráfica
+.\ejecutar.bat --consola    # versión de consola con menú
+```
+
+**Linux / macOS (o Git Bash en Windows):**
+
+```
+chmod +x ejecutar.sh        # solo la primera vez
+./ejecutar.sh               # interfaz gráfica
+./ejecutar.sh --consola     # versión de consola con menú
+```
+
+El script compila con `javac` y abre la ventana. Todo junto se ve así:
+
+```
+git clone -b claude/explicacion-codigo https://github.com/diegoanahuac/Navegador_Web_E5.git
+cd Navegador_Web_E5
+.\ejecutar.bat
+```
+
+### Si algo falla
+
+| Mensaje | Causa | Solución |
+|---|---|---|
+| `El término 'ejecutar.bat' no se reconoce...` | Falta el prefijo `.\` en PowerShell | Escribe `.\ejecutar.bat` |
+| `No such file or directory` / `no se encuentra la ruta` | La terminal no está dentro de la carpeta del proyecto | Haz `cd Navegador_Web_E5` |
+| `javac: command not found` | No hay JDK instalado (o no está en el PATH) | Instala el JDK y reabre la terminal |
+| `Permission denied` al correr `./ejecutar.sh` | Falta el permiso de ejecución | `chmod +x ejecutar.sh` |
+
+### Sin usar los scripts
+
+Los scripts solo son un atajo. Estando dentro de la carpeta, esto hace exactamente
+lo mismo:
+
+```
+javac -encoding UTF-8 -d out src/navegador/*.java src/navegador/*/*.java
+java -cp out navegador.Main
+```
 
 ---
 
@@ -756,16 +847,25 @@ produce un 404.
 
 ## Cómo compilar y ejecutar (recordatorio)
 
+Siempre en este orden: **clonar → entrar a la carpeta → ejecutar el script**
+(detalle completo en la [sección 0](#0-antes-de-empezar-clonar-y-ejecutar-el-proyecto)).
+
 ```bash
-# Windows (PowerShell)
+# 1. Clonar (una sola vez)
+git clone -b claude/explicacion-codigo https://github.com/diegoanahuac/Navegador_Web_E5.git
+
+# 2. Entrar a la carpeta (siempre, en cada terminal nueva)
+cd Navegador_Web_E5
+
+# 3a. Ejecutar en Windows (PowerShell)
 .\ejecutar.bat
 .\ejecutar.bat --consola
 
-# Linux / macOS
+# 3b. Ejecutar en Linux / macOS
 ./ejecutar.sh
 ./ejecutar.sh --consola
 
-# A mano
+# 3c. O a mano, sin scripts
 javac -encoding UTF-8 -d out src/navegador/*.java src/navegador/*/*.java
 java -cp out navegador.Main
 ```

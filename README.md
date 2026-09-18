@@ -45,6 +45,15 @@ Casos especiales, siempre con mensajes claros y sin que el programa falle:
 
 Requisito: **JDK 8 o superior** (probado con JDK 21).
 
+Primero clona el repositorio y entra a la carpeta; el script vive dentro del proyecto:
+
+```bash
+git clone -b claude/explicacion-codigo https://github.com/diegoanahuac/Navegador_Web_E5.git
+cd Navegador_Web_E5
+```
+
+Y ya dentro de la carpeta:
+
 Linux / macOS:
 
 ```bash
