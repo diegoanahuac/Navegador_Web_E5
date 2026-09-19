@@ -59,13 +59,12 @@ terminal.
 Colócate en la carpeta donde quieras guardar el proyecto y clona la rama:
 
 ```
-git clone -b claude/explicacion-codigo https://github.com/diegoanahuac/Navegador_Web_E5.git
+git clone -b explicacion_codigo https://github.com/diegoanahuac/Navegador_Web_E5.git
 ```
 
-> `-b claude/explicacion-codigo` descarga la rama que incluye este documento.
-> El código es idéntico en la rama `claude/eager-knuth-cuzccc`; si clonas sin `-b`
-> y no ves los archivos, cambia de rama con
-> `git checkout claude/explicacion-codigo`.
+> `-b explicacion_codigo` descarga la rama que incluye este documento. La rama
+> principal `main` trae el mismo código pero sin este archivo; si ya clonaste sin
+> `-b`, cámbiate con `git fetch origin` y `git checkout explicacion_codigo`.
 
 ### Paso 2 — Entrar a la carpeta del proyecto
 
@@ -99,7 +98,7 @@ chmod +x ejecutar.sh        # solo la primera vez
 El script compila con `javac` y abre la ventana. Todo junto se ve así:
 
 ```
-git clone -b claude/explicacion-codigo https://github.com/diegoanahuac/Navegador_Web_E5.git
+git clone -b explicacion_codigo https://github.com/diegoanahuac/Navegador_Web_E5.git
 cd Navegador_Web_E5
 .\ejecutar.bat
 ```
@@ -855,7 +854,7 @@ Siempre en este orden: **clonar → entrar a la carpeta → ejecutar el script**
 
 ```bash
 # 1. Clonar (una sola vez)
-git clone -b claude/explicacion-codigo https://github.com/diegoanahuac/Navegador_Web_E5.git
+git clone -b explicacion_codigo https://github.com/diegoanahuac/Navegador_Web_E5.git
 
 # 2. Entrar a la carpeta (siempre, en cada terminal nueva)
 cd Navegador_Web_E5
