@@ -1,0 +1,271 @@
+@startuml Navegador_Web_E5
+' Diagrama de clases — Navegador Web con Pilas (LIFO)
+' Se puede pegar en: plantuml.com/plantuml, draw.io (Arrange > Insert > PlantUML),
+' Visual Paradigm, StarUML o la extensión PlantUML de VS Code.
+
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam linetype ortho
+skinparam class {
+    BackgroundColor #FBF4E9
+    BorderColor #6D28F5
+    ArrowColor #6D28F5
+    FontName Segoe UI
+}
+
+package "navegador.modelo" #F6EADA {
+
+    class "Pila<T>" as Pila {
+        + {static} int CAPACIDAD_POR_DEFECTO = 5
+        - Object[] elementos
+        - int tope
+        --
+        + Pila()
+        + Pila(int capacidad)
+        + void apilar(T elemento)
+        + boolean apilarConDescarte(T elemento)
+        + T desapilar()
+        + T cima()
+        + boolean estaVacia()
+        + boolean estaLlena()
+        + int tamano()
+        + int capacidad()
+        + void vaciar()
+        + List<T> elementosDesdeElFondo()
+    }
+
+    class Pagina {
+        - String url
+        - String titulo
+        - String descripcion
+        - boolean encontrada
+        --
+        + Pagina(String url, String titulo, String descripcion)
+        - Pagina(String url, String titulo, String descripcion, boolean encontrada)
+        + {static} Pagina noEncontrada(String url)
+        + String getUrl()
+        + String getTitulo()
+        + String getDescripcion()
+        + boolean fueEncontrada()
+        + boolean equals(Object otro)
+        + int hashCode()
+    }
+
+    class CatalogoLocal {
+        - Map<String, Pagina> sitios
+        --
+        + CatalogoLocal()
+        - void registrar(String url, String titulo, String descripcion)
+        + Pagina abrir(String urlNormalizada)
+        + List<String> urlsDisponibles()
+        + {static} String normalizar(String textoUsuario)
+        - {static} String clave(String url)
+    }
+
+    class Navegador {
+        - Pila<Pagina> pilaAtras
+        - Pila<Pagina> pilaAdelante
+        - CatalogoLocal catalogo
+        - Pagina paginaActual
+        --
+        + Navegador()
+        + Navegador(int capacidad)
+        + Resultado visitar(String textoUrl)
+        + Resultado atras()
+        + Resultado adelante()
+        + Pagina getPaginaActual()
+        + Pila<Pagina> getPilaAtras()
+        + Pila<Pagina> getPilaAdelante()
+        + CatalogoLocal getCatalogo()
+        + boolean puedeRetroceder()
+        + boolean puedeAvanzar()
+    }
+
+    class Resultado {
+        - Tipo tipo
+        - String mensaje
+        - Aviso aviso
+        --
+        + Resultado(Tipo tipo, String mensaje, Aviso aviso)
+        + {static} Resultado exito(String mensaje)
+        + {static} Resultado aviso(String mensaje, Aviso aviso)
+        + {static} Resultado error(String mensaje, Aviso aviso)
+        + Tipo getTipo()
+        + String getMensaje()
+        + Aviso getAviso()
+    }
+
+    enum Tipo {
+        EXITO
+        AVISO
+        ERROR
+    }
+
+    enum Aviso {
+        NINGUNO
+        PILA_ATRAS_LLENA
+        PILA_ADELANTE_LLENA
+        PILA_ATRAS_VACIA
+        PILA_ADELANTE_VACIA
+    }
+}
+
+package "navegador.ui" #F6EADA {
+
+    class VentanaNavegador {
+        - Navegador navegador
+        - JTextField campoUrl
+        - PanelPaginaActual panelPaginaActual
+        - PanelPila panelAtras
+        - PanelPila panelAdelante
+        - JLabel barraEstado
+        --
+        + VentanaNavegador()
+        - JComponent construirEncabezado()
+        - JComponent construirCentro()
+        - JComponent construirBarraUrl()
+        - JComponent construirBotones()
+        - JComponent construirSugerencias()
+        - JComponent construirPie()
+        - void registrarAtajos()
+        - void visitar()
+        - void retroceder()
+        - void avanzar()
+        - void salir()
+        - void procesar(Resultado resultado)
+        - void actualizarVista()
+        - void mostrarMensaje(Resultado resultado)
+    }
+
+    class PanelRedondeado {
+        - int radio
+        - Color colorFondo
+        - Color colorBorde
+        - int grosorBorde
+        --
+        + PanelRedondeado(int radio, Color fondo, Color borde)
+        + void setColorFondo(Color c)
+        + void setColorBorde(Color c)
+        + void setGrosorBorde(int g)
+        # void paintComponent(Graphics g)
+    }
+
+    class PanelPila {
+        - int capacidad
+        - Color acento
+        - Fila[] filas
+        - CardLayout cartas
+        - Timer temporizadorAviso
+        --
+        + PanelPila(String titulo, int capacidad, Color acento)
+        - JPanel construirEncabezado(String titulo)
+        + void actualizar(List<Pagina> desdeElFondo)
+        + void mostrarAviso(String texto)
+    }
+
+    class Fila {
+        - int posicion
+        - JLabel texto
+        - PanelRedondeado caja
+        --
+        ~ void mostrar(String url, boolean esCima)
+        ~ void limpiar()
+    }
+
+    class PanelPaginaActual {
+        - JLabel icono
+        - JLabel titulo
+        - JLabel descripcion
+        --
+        + PanelPaginaActual()
+        + void mostrar(Pagina pagina)
+    }
+
+    class BotonPlano {
+        - Color fondo
+        - Color fondoHover
+        - boolean encima
+        --
+        + BotonPlano(String texto, Color fondo, Color hover, Color borde, Color texto, int radio)
+        + {static} BotonPlano solido(String texto)
+        + {static} BotonPlano contorno(String texto)
+        + {static} BotonPlano salida(String texto)
+        # void paintComponent(Graphics g)
+    }
+
+    class IconoGlobo {
+        - int tamano
+        - Color color
+        --
+        + IconoGlobo(int tamano, Color color)
+        + void paintIcon(Component c, Graphics g, int x, int y)
+        + int getIconWidth()
+        + int getIconHeight()
+    }
+
+    class Paleta <<utility>> {
+        + {static} Color FONDO
+        + {static} Color TARJETA
+        + {static} Color BORDE
+        + {static} Color ACENTO
+        + {static} Color ACENTO_PROFUNDO
+        + {static} Color ACENTO_TENUE
+        --
+        + {static} Font fuente(int estilo, int tamano)
+        - {static} String elegirFamilia()
+    }
+}
+
+package "navegador.consola" #F6EADA {
+    class NavegadorConsola {
+        - Navegador navegador
+        - Scanner entrada
+        --
+        + void ejecutar()
+        - void mostrarEstado()
+        - String describir(Pila<Pagina> pila)
+        - void imprimir(Resultado resultado)
+    }
+}
+
+class Main {
+    + {static} void main(String[] args)
+}
+
+' ---------- Relaciones del modelo ----------
+Navegador "1" *-- "2" Pila : pilaAtras / pilaAdelante
+Navegador "1" *-- "1" CatalogoLocal : catalogo
+Navegador "1" o-- "0..1" Pagina : paginaActual
+Navegador ..> Resultado : devuelve
+Pila ..> Pagina : almacena
+CatalogoLocal "1" *-- "*" Pagina : sitios
+Resultado *-- Tipo
+Resultado *-- Aviso
+
+' ---------- Relaciones de la interfaz ----------
+VentanaNavegador "1" *-- "1" Navegador : usa la logica
+VentanaNavegador "1" *-- "2" PanelPila
+VentanaNavegador "1" *-- "1" PanelPaginaActual
+VentanaNavegador ..> Resultado : interpreta
+VentanaNavegador ..> BotonPlano : crea
+VentanaNavegador ..> Paleta : colores
+PanelPila --|> PanelRedondeado
+PanelPaginaActual --|> PanelRedondeado
+PanelPila "1" *-- "5" Fila
+PanelPila ..> Pagina : dibuja
+PanelPaginaActual ..> Pagina : dibuja
+PanelPila ..> IconoGlobo
+BotonPlano ..> Paleta
+
+' ---------- Arranque ----------
+Main ..> VentanaNavegador : modo grafico
+Main ..> NavegadorConsola : modo --consola
+NavegadorConsola "1" *-- "1" Navegador : misma logica
+
+note bottom of Pila
+  Estructura LIFO propia (no usa java.util.Stack).
+  Arreglo de capacidad fija + indice 'tope'.
+  apilar/desapilar/cima son O(1).
+end note
+
+@enduml

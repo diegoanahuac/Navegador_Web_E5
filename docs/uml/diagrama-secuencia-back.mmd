@@ -1,0 +1,19 @@
+sequenceDiagram
+    actor Usuario
+    participant V as VentanaNavegador
+    participant N as Navegador
+    participant A as pilaAtras
+    participant F as pilaAdelante
+
+    Usuario->>V: clic en "Back"
+    V->>N: atras()
+    N->>A: estaVacia()
+    A-->>N: false
+    N->>F: apilarConDescarte(paginaActual)
+    N->>A: desapilar()
+    A-->>N: pagina anterior
+    N-->>V: Resultado(EXITO, "Back: regresaste a ...")
+    V->>V: actualizarVista()
+    V-->>Usuario: pagina actual y pilas redibujadas
+
+    Note over N,A: Si pilaAtras esta vacia, atras() no modifica nada<br/>y devuelve Resultado(ERROR, PILA_ATRAS_VACIA)

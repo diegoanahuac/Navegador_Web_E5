@@ -203,6 +203,9 @@ colores salen de `Paleta.java`, fue cambiar tres constantes y toda la app cambi�
 
 ## 3. Arquitectura: cómo se conectan las clases
 
+> El **diagrama de clases UML** completo está en el [README](README.md#diagrama-de-clases-uml),
+> y su código fuente (PlantUML y Mermaid) en la carpeta `docs/uml/`.
+
 ```
                     ┌──────────────────────────┐
   clic del usuario  │    ui/VentanaNavegador   │  (Swing: ventana, botones, campos)

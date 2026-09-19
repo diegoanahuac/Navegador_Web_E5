@@ -1,0 +1,181 @@
+classDiagram
+    direction LR
+
+    class Pila~T~ {
+        +int CAPACIDAD_POR_DEFECTO$
+        -Object[] elementos
+        -int tope
+        +Pila()
+        +Pila(int capacidad)
+        +apilar(T elemento) void
+        +apilarConDescarte(T elemento) boolean
+        +desapilar() T
+        +cima() T
+        +estaVacia() boolean
+        +estaLlena() boolean
+        +tamano() int
+        +capacidad() int
+        +vaciar() void
+        +elementosDesdeElFondo() List~T~
+    }
+
+    class Pagina {
+        -String url
+        -String titulo
+        -String descripcion
+        -boolean encontrada
+        +Pagina(String url, String titulo, String descripcion)
+        +noEncontrada(String url) Pagina$
+        +getUrl() String
+        +getTitulo() String
+        +getDescripcion() String
+        +fueEncontrada() boolean
+        +equals(Object otro) boolean
+        +hashCode() int
+    }
+
+    class CatalogoLocal {
+        -Map~String, Pagina~ sitios
+        +CatalogoLocal()
+        -registrar(String url, String titulo, String descripcion) void
+        +abrir(String urlNormalizada) Pagina
+        +urlsDisponibles() List~String~
+        +normalizar(String textoUsuario) String$
+        -clave(String url) String$
+    }
+
+    class Navegador {
+        -Pila~Pagina~ pilaAtras
+        -Pila~Pagina~ pilaAdelante
+        -CatalogoLocal catalogo
+        -Pagina paginaActual
+        +Navegador()
+        +Navegador(int capacidad)
+        +visitar(String textoUrl) Resultado
+        +atras() Resultado
+        +adelante() Resultado
+        +getPaginaActual() Pagina
+        +getPilaAtras() Pila~Pagina~
+        +getPilaAdelante() Pila~Pagina~
+        +getCatalogo() CatalogoLocal
+        +puedeRetroceder() boolean
+        +puedeAvanzar() boolean
+    }
+
+    class Resultado {
+        -Tipo tipo
+        -String mensaje
+        -Aviso aviso
+        +exito(String mensaje) Resultado$
+        +aviso(String mensaje, Aviso aviso) Resultado$
+        +error(String mensaje, Aviso aviso) Resultado$
+        +getTipo() Tipo
+        +getMensaje() String
+        +getAviso() Aviso
+    }
+
+    class Tipo {
+        <<enumeration>>
+        EXITO
+        AVISO
+        ERROR
+    }
+
+    class Aviso {
+        <<enumeration>>
+        NINGUNO
+        PILA_ATRAS_LLENA
+        PILA_ADELANTE_LLENA
+        PILA_ATRAS_VACIA
+        PILA_ADELANTE_VACIA
+    }
+
+    class VentanaNavegador {
+        -Navegador navegador
+        -JTextField campoUrl
+        -PanelPaginaActual panelPaginaActual
+        -PanelPila panelAtras
+        -PanelPila panelAdelante
+        -JLabel barraEstado
+        +VentanaNavegador()
+        -visitar() void
+        -retroceder() void
+        -avanzar() void
+        -salir() void
+        -procesar(Resultado resultado) void
+        -actualizarVista() void
+        -mostrarMensaje(Resultado resultado) void
+    }
+
+    class PanelPila {
+        -int capacidad
+        -Fila[] filas
+        -CardLayout cartas
+        -Timer temporizadorAviso
+        +PanelPila(String titulo, int capacidad, Color acento)
+        +actualizar(List~Pagina~ desdeElFondo) void
+        +mostrarAviso(String texto) void
+    }
+
+    class PanelPaginaActual {
+        +PanelPaginaActual()
+        +mostrar(Pagina pagina) void
+    }
+
+    class PanelRedondeado {
+        -int radio
+        -Color colorFondo
+        -Color colorBorde
+        +paintComponent(Graphics g) void
+    }
+
+    class BotonPlano {
+        +solido(String texto) BotonPlano$
+        +contorno(String texto) BotonPlano$
+        +salida(String texto) BotonPlano$
+        +paintComponent(Graphics g) void
+    }
+
+    class IconoGlobo {
+        +paintIcon(Component c, Graphics g, int x, int y) void
+    }
+
+    class Paleta {
+        +Color FONDO$
+        +Color ACENTO$
+        +fuente(int estilo, int tamano) Font$
+    }
+
+    class NavegadorConsola {
+        -Navegador navegador
+        +ejecutar() void
+        -mostrarEstado() void
+    }
+
+    class Main {
+        +main(String[] args) void$
+    }
+
+    Navegador o-- "2" Pila : pilaAtras y pilaAdelante
+    Navegador *-- CatalogoLocal : catalogo
+    Navegador --> Pagina : paginaActual
+    Navegador ..> Resultado : devuelve
+    Pila ..> Pagina : almacena
+    CatalogoLocal *-- Pagina : sitios
+    Resultado *-- Tipo
+    Resultado *-- Aviso
+
+    VentanaNavegador *-- Navegador : usa la logica
+    VentanaNavegador *-- PanelPila : dos paneles
+    VentanaNavegador *-- PanelPaginaActual
+    VentanaNavegador ..> Resultado : interpreta
+    PanelPila --|> PanelRedondeado
+    PanelPaginaActual --|> PanelRedondeado
+    PanelPila ..> Pagina : dibuja
+    PanelPaginaActual ..> Pagina : dibuja
+    VentanaNavegador ..> BotonPlano
+    VentanaNavegador ..> Paleta
+    PanelPila ..> IconoGlobo
+    NavegadorConsola *-- Navegador : misma logica
+    Main ..> VentanaNavegador : modo grafico
+    Main ..> NavegadorConsola : modo --consola

@@ -1,0 +1,48 @@
+@startuml Secuencia_Back
+' Diagrama de secuencia — qué ocurre al presionar Back
+skinparam shadowing false
+skinparam sequence {
+    ArrowColor #6D28F5
+    LifeLineBorderColor #6D28F5
+    ParticipantBackgroundColor #FBF4E9
+    ParticipantBorderColor #6D28F5
+    ActorBackgroundColor #FBF4E9
+}
+
+actor Usuario
+participant "VentanaNavegador" as V
+participant "Navegador" as N
+participant "pilaAtras : Pila<Pagina>" as A
+participant "pilaAdelante : Pila<Pagina>" as F
+
+Usuario -> V : clic en "Back"
+activate V
+V -> N : atras()
+activate N
+
+N -> A : estaVacia()
+activate A
+A --> N : false
+deactivate A
+
+alt pila atras con elementos
+    N -> F : apilarConDescarte(paginaActual)
+    activate F
+    F --> N : false
+    deactivate F
+    N -> A : desapilar()
+    activate A
+    A --> N : pagina anterior
+    deactivate A
+    N --> V : Resultado(EXITO, "Back: regresaste a ...")
+else pila atras vacia
+    N --> V : Resultado(ERROR, PILA_ATRAS_VACIA)
+end
+deactivate N
+
+V -> V : actualizarVista()
+V -> V : mostrarMensaje(resultado)
+V --> Usuario : pagina actual y pilas redibujadas
+deactivate V
+
+@enduml
